@@ -7,14 +7,17 @@ from .models import AboutInfo, AboutSkill, SocialLink
 
 class AboutModelTests(TestCase):
     def setUp(self):
-        self.about_info = AboutInfo.objects.create(
-            first_name="John",
-            last_name="Doe",
-            description="A test description."
-        )
+        try:
+            self.about = AboutInfo.objects.create(
+                first_name="John",
+                last_name="Doe",
+                description="A test description."
+            )
+        except ValidationError:
+            self.about = AboutInfo.objects.first()
 
     def test_about_info_creation(self):
-        self.assertEqual(str(self.about_info), "About me")
+        self.assertEqual(str(self.about), "About me")
 
     def test_about_info_save(self):
         with self.assertRaises(ValidationError):
@@ -27,16 +30,19 @@ class AboutModelTests(TestCase):
 
     def test_about_info_delete(self):
         with self.assertRaises(ValidationError):
-            self.about_info.delete()
+            self.about.delete()
 
 
 class AboutSkillTestCase(TestCase):
     def setUp(self):
-        self.about = AboutInfo.objects.create(
-            first_name="John",
-            last_name="Doe",
-            description="A test description."
-        )
+        try:
+            self.about = AboutInfo.objects.create(
+                first_name="John",
+                last_name="Doe",
+                description="A test description."
+            )
+        except ValidationError:
+            self.about = AboutInfo.objects.first()
 
     def test_about_skill_creation(self):
         about_skill = AboutSkill.objects.create(
@@ -81,11 +87,14 @@ class AboutSkillTestCase(TestCase):
 
 class SocialLinkTestCase(TestCase):
     def setUp(self):
-        self.about = AboutInfo.objects.create(
-            first_name="John",
-            last_name="Doe",
-            description="A test description."
-        )
+        try:
+            self.about = AboutInfo.objects.create(
+                first_name="John",
+                last_name="Doe",
+                description="A test description."
+            )
+        except ValidationError:
+            self.about = AboutInfo.objects.first()
 
     def test_social_link_creation(self):
         social_link = SocialLink.objects.create(
