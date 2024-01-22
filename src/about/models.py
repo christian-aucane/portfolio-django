@@ -22,7 +22,6 @@ class AboutInfo(models.Model):
     class Meta:
         verbose_name = _("About me")
         verbose_name_plural = _("About me")
-        ordering = ['id']
 
     first_name = models.CharField(max_length=255, default=_("Your first name"), verbose_name=_("First Name"))
     last_name = models.CharField(max_length=255, default=_("Your last name"), verbose_name=_("Last Name"))
