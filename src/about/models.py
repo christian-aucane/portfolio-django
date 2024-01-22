@@ -3,6 +3,7 @@ from django.db import models
 from django.utils.translation import gettext as _
 
 from base.models import DisplayOrderBaseModel
+from common.models import FontAwesomeIcon
 
 
 class AboutInfo(models.Model):
@@ -29,6 +30,10 @@ class AboutInfo(models.Model):
 
 
 class AboutSkill(DisplayOrderBaseModel):
+    class Meta:
+        verbose_name = _("Skill")
+        verbose_name_plural = _("Skills")
+
     about = models.ForeignKey(AboutInfo, on_delete=models.CASCADE, default=1, verbose_name=_("About me"))
     name = models.CharField(max_length=255, unique=True, verbose_name=_("Name"))
 
@@ -37,10 +42,14 @@ class AboutSkill(DisplayOrderBaseModel):
 
 
 class SocialLink(DisplayOrderBaseModel):
+    class Meta:
+        verbose_name = _("Social Link")
+        verbose_name_plural = _("Social Links")
+
     about = models.ForeignKey(AboutInfo, on_delete=models.CASCADE, default=1, verbose_name=_("About me"))
     name = models.CharField(max_length=255, unique=True, verbose_name=_("Name"))
     url = models.URLField(verbose_name=_("URL"))
-    icon_classes = models.CharField(max_length=255, verbose_name=_("Font Awesome Icon Classes"))
+    icon = models.ForeignKey(FontAwesomeIcon, on_delete=models.CASCADE, verbose_name=_("Font Awesome Icon"))
 
     def __str__(self):
         return self.name
