@@ -14,6 +14,3 @@ class Paragraph(DisplayOrderBaseModel):
 
     def __str__(self):
         return f"{self.title} - {_('Paragraph')} {self.display_order}"
-
-    def html(self):
-        return f"<p>{self.text}</p>" if self.text else ""
