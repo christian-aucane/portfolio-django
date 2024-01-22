@@ -2,20 +2,7 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import gettext as _
 
-
-class DisplayOrderBaseModel(models.Model):
-    display_order = models.PositiveIntegerField(default=1, verbose_name=_("Display Order"))
-
-    class Meta:
-        abstract = True
-        ordering = ['display_order']
-
-    def save(self, *args, **kwargs):
-        # Ensures that there is only one entry in the table
-        model_class = self.__class__
-        if model_class.objects.exists() and not self.pk:
-            self.display_order = model_class.objects.last().display_order + 1
-        super().save(*args, **kwargs)
+from base.models import DisplayOrderBaseModel
 
 
 class AboutInfo(models.Model):
