@@ -1,8 +1,10 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from base.models import DurationBaseModel
 
-class Experience(models.Model):
+
+class Experience(DurationBaseModel):
     class Meta:
         verbose_name = _("Experience")
         verbose_name_plural = _("Experiences")
@@ -10,9 +12,7 @@ class Experience(models.Model):
     title = models.CharField(max_length=255, verbose_name=_("Title"))
     company = models.CharField(max_length=255, verbose_name=_("Company"))
     description = models.TextField(verbose_name=_("Description"))
-    start_date = models.DateField(verbose_name=_("Start Date"))
-    end_date = models.DateField(verbose_name=_("End Date"), null=True, blank=True)
-    thumbnail = models.ImageField(upload_to='experience_images/', verbose_name=_("Image"))
+    thumbnail = models.ImageField(upload_to='experience_images/', verbose_name=_("Thumbnail"))
 
     def __str__(self):
         return f"{self.title} at {self.company}"
