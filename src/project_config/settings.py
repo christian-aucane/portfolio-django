@@ -76,6 +76,7 @@ INSTALLED_APPS = [
 
     # Local apps
     "about",
+    "experience",
 
 ]
 
