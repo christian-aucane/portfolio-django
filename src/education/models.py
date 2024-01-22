@@ -17,3 +17,6 @@ class Education(DurationBaseModel):
 
     def __str__(self):
         return f"{self.school_name} - {self.program}"
+
+    def get_thumbnail_url(self):
+        return self.thumbnail.url
