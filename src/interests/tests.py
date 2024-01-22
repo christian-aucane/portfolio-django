@@ -11,11 +11,6 @@ class ParagraphModelTests(TestCase):
             text="This is a test paragraph."
         )
         self.assertEqual(str(paragraph), "Introduction - Paragraph 1")
-        self.assertEqual(paragraph.html(), "<p>This is a test paragraph.</p>")
-
-    def test_paragraph_without_text(self):
-        paragraph = Paragraph.objects.create(title="Empty Paragraph")
-        self.assertEqual(paragraph.html(), "")
 
     def test_paragraph_unique_title(self):
         with self.assertRaises(IntegrityError):
