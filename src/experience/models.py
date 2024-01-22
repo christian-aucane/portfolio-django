@@ -3,6 +3,10 @@ from django.utils.translation import gettext_lazy as _
 
 
 class Experience(models.Model):
+    class Meta:
+        verbose_name = _("Experience")
+        verbose_name_plural = _("Experiences")
+
     title = models.CharField(max_length=255, verbose_name=_("Title"))
     company = models.CharField(max_length=255, verbose_name=_("Company"))
     description = models.TextField(verbose_name=_("Description"))
