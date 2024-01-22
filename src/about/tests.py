@@ -2,6 +2,7 @@ from django.core.exceptions import ValidationError
 from django.db import IntegrityError
 from django.test import TestCase
 
+from common.models import FontAwesomeIcon
 from .models import AboutInfo, AboutSkill, SocialLink
 
 
@@ -96,11 +97,16 @@ class SocialLinkTestCase(TestCase):
         except ValidationError:
             self.about = AboutInfo.objects.first()
 
+        self.icon = FontAwesomeIcon.objects.create(
+            title="Test Icon",
+            classes="fa fa-test"
+        )
+
     def test_social_link_creation(self):
         social_link = SocialLink.objects.create(
             name="LinkedIn",
             url="https://www.linkedin.com/",
-            icon_classes="fa fa-linkedin",
+            icon=self.icon,
             display_order=1
         )
         self.assertEqual(str(social_link), "LinkedIn")
@@ -110,13 +116,13 @@ class SocialLinkTestCase(TestCase):
             SocialLink.objects.create(
                 name="LinkedIn",
                 url="https://www.linkedin.com/",
-                icon_classes="fa fa-linkedin",
+                icon=self.icon,
                 display_order=1
             )
             SocialLink.objects.create(
                 name="LinkedIn",  # Utilisez le même nom pour provoquer une IntegrityError
                 url="https://www.linkedin.com/",
-                icon_classes="fa fa-linkedin",
+                icon=self.icon,
                 display_order=2
             )
 
@@ -124,7 +130,7 @@ class SocialLinkTestCase(TestCase):
         social_link = SocialLink.objects.create(
             name="Twitter",
             url="https://twitter.com/",
-            icon_classes="fa fa-twitter"
+            icon=self.icon
         )
         self.assertEqual(social_link.display_order, 1)
 
@@ -132,13 +138,13 @@ class SocialLinkTestCase(TestCase):
         SocialLink.objects.create(
             name="Facebook",
             url="https://www.facebook.com/",
-            icon_classes="fa fa-facebook",
+            icon=self.icon,
             display_order=1
         )
         social_link = SocialLink.objects.create(
             name="Instagram",
             url="https://www.instagram.com/",
-            icon_classes="fa fa-instagram"
+            icon=self.icon
         )
         self.assertEqual(social_link.display_order, 2)
 
@@ -146,7 +152,7 @@ class SocialLinkTestCase(TestCase):
         social_link = SocialLink.objects.create(
             name="LinkedIn",
             url="https://www.linkedin.com/",
-            icon_classes="fa fa-linkedin",
+            icon=self.icon,
             display_order=1
         )
         self.assertEqual(social_link.about, self.about)
