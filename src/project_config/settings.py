@@ -66,12 +66,16 @@ MODE = env("MODE")
 # Application definition
 # See https://docs.djangoproject.com/en/3.2/ref/settings/#installed-apps
 INSTALLED_APPS = [
+    # Django core apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # Local apps
+    "about",
 
 ]
 
