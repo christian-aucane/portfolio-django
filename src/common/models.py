@@ -12,9 +12,3 @@ class FontAwesomeIcon(models.Model):
 
     def __str__(self):
         return self.title
-
-    def html(self):
-        return f'<i class="{self.classes}" title={self.title}></i>'
-
-    def li_html(self, content=""):
-        return f'<li><i class="fa-li {self.classes}" title={self.title}></i>{content}</li>'
