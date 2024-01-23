@@ -1,5 +1,24 @@
 from django.db import models
+from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
+
+from base.models import UniqueEntryBaseModel
+
+
+class SiteMetaData(UniqueEntryBaseModel):
+    class Meta:
+        verbose_name = _("Site Meta Data")
+        verbose_name_plural = _("Site Meta Data")
+
+    title = models.CharField(max_length=255, default=_("Default Site Title"), verbose_name=_("Site Title"))
+    description = models.TextField(default=_("Default Site Description"), verbose_name=_("Site Description"))
+    author = models.CharField(max_length=255, default=_("Default Author"), verbose_name=_("Author"))
+    og_title = models.CharField(max_length=255, default=_("Default OG Title"), verbose_name=_("OG Title"))
+    og_description = models.TextField(default=_("Default OG Description"), verbose_name=_("OG Description"))
+    og_image = models.URLField(blank=True, null=True, verbose_name=_("OG Image"))
+
+    def __str__(self):
+        return _("Site Meta Data")
 
 
 class FontAwesomeIcon(models.Model):
