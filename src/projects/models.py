@@ -11,7 +11,7 @@ class Technology(models.Model):
         verbose_name_plural = _("Technologies")
         ordering = ['name']
 
-    name = models.CharField(max_length=255, verbose_name=_("Name"))
+    name = models.CharField(max_length=255, verbose_name=_("Name"), unique=True)
     icon = models.ForeignKey(FontAwesomeIcon, on_delete=models.CASCADE,
                              verbose_name=_("Icon"))
 
@@ -25,7 +25,7 @@ class Category(models.Model):
         verbose_name_plural = _("Categories")
         ordering = ['name']
 
-    name = models.CharField(max_length=255, verbose_name=_("Name"))
+    name = models.CharField(max_length=255, verbose_name=_("Name"), unique=True)
 
     def __str__(self):
         return self.name
@@ -44,6 +44,7 @@ class Project(DisplayOrderBaseModel):
 
     def __str__(self):
         return self.name
+
 
 class ProjectTechnology(DisplayOrderBaseModel):
     class Meta:
@@ -68,11 +69,7 @@ class ProjectCategory(DisplayOrderBaseModel):
                                 verbose_name=_("Project"))
     category = models.ForeignKey(Category, on_delete=models.CASCADE,
                                  verbose_name=_("Category"))
-    technologies = models.ManyToManyField(Technology, through='ProjectTechnology', verbose_name=_("Technologies"))
+    technologies = models.ManyToManyField(Technology, through=ProjectTechnology, verbose_name=_("Technologies"))
 
     def __str__(self):
         return f"{self.project} - {self.category}"
-
-
-
-
