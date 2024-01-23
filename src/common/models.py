@@ -1,6 +1,5 @@
 from django.db import models
-from django.urls import reverse
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext as _
 
 from base.models import UniqueEntryBaseModel
 
@@ -15,7 +14,7 @@ class SiteMetaData(UniqueEntryBaseModel):
     author = models.CharField(max_length=255, default=_("Default Author"), verbose_name=_("Author"))
     og_title = models.CharField(max_length=255, default=_("Default OG Title"), verbose_name=_("OG Title"))
     og_description = models.TextField(default=_("Default OG Description"), verbose_name=_("OG Description"))
-    og_image = models.URLField(blank=True, null=True, verbose_name=_("OG Image"))
+    og_image = models.URLField(blank=True, null=True, verbose_name=_("OG Image URL"))
 
     def __str__(self):
         return _("Site Meta Data")
