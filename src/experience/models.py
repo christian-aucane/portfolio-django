@@ -12,7 +12,7 @@ class Experience(DurationBaseModel):
     title = models.CharField(max_length=255, verbose_name=_("Title"))
     company = models.CharField(max_length=255, verbose_name=_("Company"))
     description = models.TextField(verbose_name=_("Description"))
-    thumbnail = models.ImageField(upload_to='experience_images/', verbose_name=_("Thumbnail"))
+    thumbnail = models.ImageField(upload_to='experience_thumbnails/', verbose_name=_("Thumbnail"))
 
     def __str__(self):
         return f"{self.title} at {self.company}"
