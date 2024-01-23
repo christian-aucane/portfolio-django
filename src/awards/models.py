@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from base.models import DisplayOrderBaseModel
+from common.models import FontAwesomeIcon
 
 
 class AwardCategory(DisplayOrderBaseModel):
@@ -10,7 +11,7 @@ class AwardCategory(DisplayOrderBaseModel):
         verbose_name_plural = _("Award Categories")
 
     title = models.CharField(max_length=255, unique=True, verbose_name=_("Title"))
-    icon = models.CharField(max_length=255, verbose_name=_("Icon"))
+    icon = models.ForeignKey(FontAwesomeIcon, on_delete=models.CASCADE, verbose_name=_("Icon"))
     icon_color = models.CharField(max_length=255, verbose_name=_("Icon Color"))
 
     def __str__(self):

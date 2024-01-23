@@ -45,6 +45,22 @@ class Project(DisplayOrderBaseModel):
     def __str__(self):
         return self.name
 
+    def get_thumbnail_url(self):
+        return self.thumbnail.url
+
+    def get_technologies_by_categories(self):
+        technologies_by_category = defaultdict(list)
+        categories = self.categories.objects.all().values_list('name', flat=True)
+        for category in categories:
+
+            technologies_by_category[category].append(category)
+        ordered_technologies = self.categor.order_by('category', 'display_order')
+
+        for technology in ordered_skills:
+            skills_by_category[skill.category].append(skill)
+
+        return skills_by_category
+
 
 class ProjectTechnology(DisplayOrderBaseModel):
     class Meta:
