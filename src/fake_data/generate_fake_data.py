@@ -21,6 +21,8 @@ fake = Faker()
 # TODO : gérer les dates de debut et de fin correctement (date de fin >= date de debut) et pour chaque experience une
 #  date de début qui est apres la date de fin de l'experience précédente
 
+# TODO : Ajouter docstrings
+
 THUMBNAIL = File(open("fake_data/fake_thumbnail.jpg", 'rb'))
 
 FILE = File(open("fake_data/fake_file.pdf", 'rb'))
@@ -50,7 +52,7 @@ def generate_about_info():
 
 def generate_about_skills():
     about_skills = [AboutSkill(name=get_unique_fake_word()) for _ in range(5)]
-    AboutSkill.objects.bulk_create
+    AboutSkill.objects.bulk_create(about_skills)
 
 
 def generate_social_links():
