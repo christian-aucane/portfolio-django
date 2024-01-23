@@ -7,7 +7,7 @@ class SkillModelTests(TestCase):
     def setUp(self):
         self.icon = FontAwesomeIcon.objects.create(
             title="Python",
-            classes="fab fa-python"
+            css_classes="fab fa-python"
         )
 
     def test_skill_creation(self):

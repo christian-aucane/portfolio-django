@@ -8,7 +8,7 @@ class FontAwesomeIcon(models.Model):
         verbose_name_plural = _("Font Awesome Icons")
 
     title = models.CharField(max_length=255, unique=True, verbose_name=_("Name"))
-    classes = models.CharField(max_length=255, verbose_name=_("Font Awesome Icon Classes"))
+    css_classes = models.CharField(max_length=255, verbose_name=_("Font Awesome Icon Classes"))
 
     def __str__(self):
         return self.title
