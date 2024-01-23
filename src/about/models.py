@@ -14,6 +14,8 @@ class AboutInfo(models.Model):
     first_name = models.CharField(max_length=255, default=_("Your first name"), verbose_name=_("First Name"))
     last_name = models.CharField(max_length=255, default=_("Your last name"), verbose_name=_("Last Name"))
     description = models.TextField(default=_("Your description"), verbose_name=_("Description"))
+    thumbnail = models.ImageField(upload_to="profile_thumbnail/", null=True, blank=True,
+                                  verbose_name=_("Thumbnail"))
 
     def __str__(self):
         return _("About me")
@@ -27,6 +29,9 @@ class AboutInfo(models.Model):
 
     def delete(self, *args, **kwargs):
         raise ValidationError(_(f"Deleting the {self.__class__.__name__} object is prohibited."))
+
+    def get_thumbnail_url(self):
+        return self.thumbnail.url if self.thumbnail else ""
 
 
 class AboutSkill(DisplayOrderBaseModel):

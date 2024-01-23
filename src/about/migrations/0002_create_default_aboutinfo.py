@@ -1,6 +1,6 @@
 from django.db import migrations
 from django.utils.translation import gettext_lazy as _
-from ..models import AboutInfo
+from about.models import AboutInfo
 
 
 def create_default_about_info(apps, schema_editor):
