@@ -2,11 +2,11 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import gettext as _
 
-from base.models import DisplayOrderBaseModel
+from base.models import DisplayOrderBaseModel, UniqueEntryBaseModel
 from common.models import FontAwesomeIcon
 
 
-class AboutInfo(models.Model):
+class AboutInfo(UniqueEntryBaseModel):
     class Meta:
         verbose_name = _("About me")
         verbose_name_plural = _("About me")
@@ -19,16 +19,6 @@ class AboutInfo(models.Model):
 
     def __str__(self):
         return _("About me")
-
-    def save(self, *args, **kwargs):
-        # Ensures that there is only one entry in the table
-        model_class = self.__class__
-        if model_class.objects.exists() and not self.pk:
-            raise ValidationError(_(f"There can only be one entry in the {model_class.__name__} table."))
-        super().save(*args, **kwargs)
-
-    def delete(self, *args, **kwargs):
-        raise ValidationError(_(f"Deleting the {self.__class__.__name__} object is prohibited."))
 
     def get_thumbnail_url(self):
         return self.thumbnail.url if self.thumbnail else ""
