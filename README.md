@@ -9,3 +9,13 @@ A Django project for a portfolio
 - Ajouter des templatetags pour le rendu des elements
 - Rassembler les apps des sections dans un dossier / tout rassembler dans une app ?
 - Ajouter héritage de la classe MEta dans les models héritant de DisplayOrderBaseModel
+
+## Management commands
+Use `python manage.py <command>`
+
+### populate_test_db
+- Run migrations
+- Populate the database with fake data
+- Create a superuser
+    - *Username :* admin
+    - *Password :* admin

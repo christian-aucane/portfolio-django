@@ -99,7 +99,7 @@ class SocialLinkTestCase(TestCase):
 
         self.icon = FontAwesomeIcon.objects.create(
             title="Test Icon",
-            classes="fa fa-test"
+            css_classes="fa fa-test"
         )
 
     def test_social_link_creation(self):

@@ -7,7 +7,7 @@ from common.models import FontAwesomeIcon
 
 class TechnologyModelTest(TestCase):
     def setUp(self):
-        self.icon = FontAwesomeIcon.objects.create(title='test_icon', classes='fa-test')
+        self.icon = FontAwesomeIcon.objects.create(title='test_icon', css_classes='fa-test')
         self.technology = Technology.objects.create(name='Test Technology', icon=self.icon)
 
     def test_technology_name(self):
@@ -24,7 +24,7 @@ class TechnologyModelTest(TestCase):
 
     def test_add_same_name_technology(self):
         with self.assertRaises(IntegrityError):
-            icon = FontAwesomeIcon.objects.create(title='test_icon_2', classes='fa-test-2')
+            icon = FontAwesomeIcon.objects.create(title='test_icon_2', css_classes='fa-test-2')
             technology = Technology.objects.create(name='Test Technology', icon=icon)
             technology.full_clean()
 
@@ -49,7 +49,7 @@ class CategoryModelTest(TestCase):
 
 class ProjectModelTest(TestCase):
     def setUp(self):
-        self.icon = FontAwesomeIcon.objects.create(title='Test Icon', classes='test-class')
+        self.icon = FontAwesomeIcon.objects.create(title='Test Icon', css_classes='test-class')
         self.technology = Technology.objects.create(name='Test Technology', icon=self.icon)
         self.category = Category.objects.create(name='Test Category')
         self.project = Project.objects.create(name='Test Project', description='Project Description')
