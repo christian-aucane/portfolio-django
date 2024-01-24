@@ -29,6 +29,7 @@ class Award(DisplayOrderBaseModel):
                             verbose_name=_("PDF File"))
     category = models.ForeignKey(AwardCategory, on_delete=models.CASCADE,
                                  related_name="awards", verbose_name=_("Category"))
+    obtain_date = models.DateField(blank=True, null=True, verbose_name=_("Obtain Date"))
 
     def __str__(self):
         return f"{self.title} ({self.category})"
