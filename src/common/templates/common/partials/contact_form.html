@@ -1,0 +1,68 @@
+<div class="card border-0 rounded-3 shadow-lg">
+    <div class="card-body p-4">
+
+        <div class="text-center">
+            <div class="h1 fw-light">Contact</div>
+            <p class="mb-4 text-muted">
+                Je suis ravi de pouvoir échanger avec vous ! N'hésitez pas à me
+                contacter pour discuter de projets passionnants, partager des
+                idées ou simplement dire bonjour. Remplissez le formulaire
+                ci-dessous, et je vous répondrai dans les plus brefs délais.
+            </p>
+        </div>
+
+        <form id="contactForm">
+
+            <!-- Name Input -->
+            <div class="form-floating mb-3">
+                <input class="form-control" id="name" type="text" name="name" placeholder="Name" required/>
+                <label for="name">Nom</label>
+                <span id="nameError" class="text-danger"></span>
+            </div>
+
+            <!-- Email Input -->
+            <div class="form-floating mb-3">
+                <input class="form-control" id="emailAddress" type="email" name="email" placeholder="Email Address" required/>
+                <label for="emailAddress">Adresse Email</label>
+                <span id="emailAddressError" class="text-danger"></span>
+            </div>
+
+            <!-- TODO : ajouter un input pour le sujet -->
+
+            <!-- Message Input -->
+            <div class="form-floating mb-3">
+                <textarea class="form-control" id="message" type="text" name="message" placeholder="Message" style="height: 10rem;" required></textarea>
+                <label for="message">Message</label>
+                <span id="messageError" class="text-danger"></span>
+            </div>
+
+            <!-- Consent Checkbox -->
+            <div class="form-check mb-3">
+                <input class="form-check-input" id="consentCheckbox" type="checkbox" name="consent" required/>
+                <label class="form-check-label" for="consentCheckbox">Je consens à l'utilisation de mon adresse e-mail pour la réponse.</label>
+            </div>
+            <span id="consentCheckboxError" class="text-danger"></span>
+
+            <!-- Submit success message -->
+            <div class="d-none" id="submitSuccessMessage">
+                <div class="text-center mb-3 fw-bolder">
+                    Message envoyé avec success !
+                </div>
+            </div>
+
+            <!-- Submit error message -->
+            <div class="d-none" id="submitErrorMessage">
+                <div class="text-center text-danger mb-3">
+                    Erreur lors de l'envoi du message ...
+                </div>
+            </div>
+
+            <!-- Submit button -->
+            <div class="d-grid">
+                <button class="btn btn-primary btn-lg" id="submitButton" type="submit" disabled>Envoyer</button>
+            </div>
+
+        </form>
+
+    </div>
+</div>

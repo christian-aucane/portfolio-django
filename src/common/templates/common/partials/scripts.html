@@ -1,0 +1,14 @@
+{% load static %}
+<!-- Bootstrap -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Theme -->
+<script src="{% static 'common/js/theme.js' %}"></script>
+<!-- Contact form -->
+<script src="{% static 'common/js/form.js' %}"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // TODO : mettre l'URL de la vue de contact a la place
+        const contactForm = new contactForm('https://formspree.io/f/myyrkgvd');
+    });
+</script>

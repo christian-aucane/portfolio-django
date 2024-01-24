@@ -1,0 +1,10 @@
+{% load awards_tags %}
+<h2 class="mb-5">Awards & Certifications</h2>
+<ul class="fa-ul mb-0">
+    {% for category in awards_categories %}
+        {% for award in category.awards.all %}
+            {% render_award_li award %}
+        {% endfor %}
+        <div class="mb-3"></div>
+    {% endfor %}
+</ul>

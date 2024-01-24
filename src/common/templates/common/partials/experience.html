@@ -1,0 +1,21 @@
+<h2 class="mb-5">Experience</h2>
+{% for experience in experiences %}
+    <div class="card dynamic-card d-flex flex-column flex-md-row justify-content-between mb-5">
+        <div class="card-body flex-grow-1">
+
+            <div class="row no-gutters">
+                <div class="col-md-3 align-self-start">
+                    <img src="{{ experience.get_thumbnail_url }}" alt="{{ experience.company }}" class="dynamic-card-thumbnail card-img img-fluid h-100">
+                </div>
+                <div class="col-md-9">
+
+                    <h3 class="card-title mt-md-3">{{ experience.title }}</h3>
+                    <p class="card-text subheading mb-3">{{ experience.company }}</p>
+                    <p class="card-text">{{ experience.description }}</p>
+                </div>
+            </div>
+        </div>
+
+        <p class="flex-shrink-0 mt-1 mx-1"><span class="text-primary">{{ experience.get_duration }}</span></p>
+    </div>
+{% endfor %}

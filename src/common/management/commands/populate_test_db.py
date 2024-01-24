@@ -8,8 +8,9 @@ class Command(BaseCommand):
     help = 'Populate the test database with fake data and create a superuser.'
 
     def handle(self, *args, **options):
-        # Run migrations
+        # Make and run migrations
         try:
+            call_command('makemigrations', interactive=False)
             call_command('migrate', interactive=False)
         except CommandError as e:
             self.stdout.write(self.style.ERROR(f'Error during migration: {e}'))

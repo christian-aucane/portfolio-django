@@ -9,13 +9,18 @@ A Django project for a portfolio
 - Ajouter des templatetags pour le rendu des elements
 - Rassembler les apps des sections dans un dossier / tout rassembler dans une app ?
 - Ajouter héritage de la classe MEta dans les models héritant de DisplayOrderBaseModel
+- Ajuster le centrage des images dans les card
+- Ajouter analytique sur les liens (compteur et redirection)
+- Faire du code lint dans tous les fichiers (utiliser une librairie pour ca)
+- Ajouter les tests des models manquants
 
 ## Management commands
 Use `python manage.py <command>`
 
 ### populate_test_db
+- Make migrations
 - Run migrations
 - Populate the database with fake data
 - Create a superuser
-    - *Username :* admin
-    - *Password :* admin
+    - **Username :** admin
+    - **Password :** admin
