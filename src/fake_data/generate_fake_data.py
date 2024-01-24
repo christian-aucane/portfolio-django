@@ -1,9 +1,9 @@
 import random
 
-from django.core.files import File
 from faker import Faker
-
+from django.core.files import File
 from django.contrib.auth import get_user_model
+from django.utils.translation import gettext
 
 from about.models import AboutInfo, AboutSkill, SocialLink
 from awards.models import AwardCategory, Award
@@ -11,8 +11,9 @@ from common.models import FontAwesomeIcon
 from education.models import Education
 from experience.models import Experience
 from interests.models import Paragraph
-from projects.models import Technology, Category, Project, ProjectCategory, ProjectTechnology
+from projects.models import Technology, Category, Project, ProjectCategory, ProjectTechnology, ProjectLink
 from skills.models import Skill
+
 
 User = get_user_model()
 
@@ -30,12 +31,15 @@ FILE = File(open("fake_data/fake_file.pdf", 'rb'))
 USED_WORDS = []
 
 
-def get_unique_fake_word():
-    word = fake.word()
-    while word in USED_WORDS:
+def get_unique_fake_word(nb=1):
+    words = []
+    for _ in range(nb):
         word = fake.word()
-    USED_WORDS.append(word)
-    return word
+        while word in USED_WORDS:
+            word = fake.word()
+        USED_WORDS.append(word)
+        words.append(word)
+    return " ".join(words)
 
 
 # ABOUT
@@ -44,10 +48,9 @@ def generate_about_info():
     about_info = AboutInfo.objects.first()
     about_info.first_name = fake.first_name()
     about_info.last_name = fake.last_name()
-    about_info.description = fake.text()
-    about_info.thumbnail = THUMBNAIL
+    about_info.description = fake.text(max_nb_chars=600)
+    about_info.profile_thumbnail = THUMBNAIL
     about_info.save()
-
 
 
 def generate_about_skills():
@@ -91,11 +94,11 @@ def generate_educations():
             school_name=fake.company(),
             program=get_unique_fake_word(),
             role=fake.job(),
-            description=fake.text(),
+            description=fake.text(max_nb_chars=50),
             start_date=fake.date(),
             end_date=fake.date(),
             thumbnail=THUMBNAIL
-        )
+        ) for _ in range(5)
     ]
     Education.objects.bulk_create(educations)
 
@@ -126,14 +129,14 @@ def generate_skills():
     ]
     frameworks = [
         Skill(
-            name=fake.name(),
+            name=fake.word(),
             category="framework",
             icon=fake.random_element(frameworks_icons),
         ) for _ in range(8)
     ]
     Skill.objects.bulk_create(frameworks)
 
-    workflow_icon, _ = FontAwesomeIcon.objects.get_or_create(title="Check", css_classes="fab fa-check")
+    workflow_icon, _ = FontAwesomeIcon.objects.get_or_create(title="Check", css_classes="fas fa-check")
     workflows = [
         Skill(
             name=get_unique_fake_word(),
@@ -167,9 +170,30 @@ def generate_projects():
             Category.objects.create(name=get_unique_fake_word())
         )
 
+    links_data = [
+        {
+            "title": "Github",
+            "link": "https://github.com",
+            "icon": FontAwesomeIcon.objects.get_or_create(title="Github", css_classes="fab fa-github")[0],
+            "text": gettext("See the code")
+        },
+        {
+            "title": "Website",
+            "link": "https://example.com",
+            "icon": FontAwesomeIcon.objects.get_or_create(title="Globe", css_classes="fas fa-globe")[0],
+            "text": gettext("See the website")
+        },
+        {
+            "title": "Specifications",
+            "link": "https://example.com",
+            "icon": FontAwesomeIcon.objects.get_or_create(title="List", css_classes="fas fa-list")[0],
+            "text": gettext("See the specifications")
+        }
+    ]
+
     for _ in range(5):
         project = Project.objects.create(
-            name=get_unique_fake_word(),
+            name=get_unique_fake_word(random.randint(3, 8)),
             description=fake.text(),
             thumbnail=THUMBNAIL
         )
@@ -181,12 +205,16 @@ def generate_projects():
                 category=category
             )
 
-            project_technologies = random.sample(technologies, k=random.randint(1, 5))
+            project_technologies = random.sample(technologies, k=random.randint(2, 5))
             for technology in project_technologies:
                 ProjectTechnology.objects.create(
                     project_category=project_category,
                     technology=technology
                 )
+
+        project_links_data = random.sample(links_data, k=2)
+        project_links = [ProjectLink(project=project, **link_data) for link_data in project_links_data]
+        ProjectLink.objects.bulk_create(project_links)
 
 
 # INTERESTS
@@ -195,8 +223,8 @@ def generate_interests():
     paragraphs = [
         Paragraph(
             title=get_unique_fake_word(),
-            text=fake.paragraph()
-        ) for _ in range(5)
+            text=fake.text(max_nb_chars=400),
+        ) for _ in range(3)
     ]
     Paragraph.objects.bulk_create(paragraphs)
 
@@ -204,20 +232,22 @@ def generate_interests():
 # AWARDS
 
 def generate_awards():
+    def generate(category):
+        obtained = random.randint(0, 3) >= 1
+        return Award(
+            title=get_unique_fake_word(random.randint(3, 8)),
+            text=fake.text(max_nb_chars=random.randint(25, 80)),
+            category=category,
+            file=FILE if obtained else None,
+            obtain_date=fake.date() if obtained else None
+        )
     trophy_icon, _ = FontAwesomeIcon.objects.get_or_create(
         title="trophy", css_classes="fas fa-trophy"
     )
     trophy_category, _ = AwardCategory.objects.get_or_create(
         title="Trophies", icon=trophy_icon, icon_color="text-warning"
     )
-    trophies = [
-        Award(
-            title=get_unique_fake_word(),
-            text=fake.text(),
-            category=trophy_category,
-            file=FILE
-        ) for _ in range(5)
-    ]
+    trophies = [generate(trophy_category) for _ in range(random.randint(3, 10))]
     Award.objects.bulk_create(trophies)
 
     courses_icon, _ = FontAwesomeIcon.objects.get_or_create(
@@ -226,14 +256,8 @@ def generate_awards():
     courses_category, _ = AwardCategory.objects.get_or_create(
         title="Courses", icon=courses_icon, icon_color="text-success"
     )
-    courses = [
-        Award(
-            title=get_unique_fake_word(),
-            text=fake.text(),
-            category=courses_category,
-            file=FILE
-        ) for _ in range(5)
-    ]
+
+    courses = [generate(courses_category) for _ in range(random.randint(3, 10))]
     Award.objects.bulk_create(courses)
 
 
