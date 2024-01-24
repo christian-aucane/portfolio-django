@@ -44,7 +44,7 @@ class FooterCredits(DisplayOrderBaseModel):
             if original_instance.html != self.html:
                 self.html = original_instance.html
 
-        super().save(*args, **kwargs)
+        return super().save(*args, **kwargs)
 
     def delete(self, *args, **kwargs):
         if self.id == 1:
