@@ -107,6 +107,7 @@ class ContactMessage(models.Model):
 
 class AdminContact(UniqueEntryBaseModel):
     admin_email = models.EmailField(default="default@example.com", verbose_name=_("Admin Email"))
+    website_email = models.EmailField(default="default@example.com", verbose_name=_("Website Email"))
 
     def __str__(self):
         return _("Admin Contact Information")

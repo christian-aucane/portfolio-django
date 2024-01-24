@@ -10,7 +10,7 @@ def create_default_admin_contact(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('common', '0002_contactthread_gdpr_consent'),
+        ('contact', '0003_admincontact'),
     ]
 
     operations = [
