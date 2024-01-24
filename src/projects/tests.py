@@ -1,7 +1,7 @@
 from django.core.exceptions import ValidationError
 from django.db import IntegrityError
 from django.test import TestCase
-from .models import Technology, Category, Project, ProjectCategory, ProjectTechnology
+from .models import Technology, Category, Project, ProjectCategory, ProjectTechnology, ProjectLink
 from common.models import FontAwesomeIcon
 
 
@@ -71,3 +71,28 @@ class ProjectModelTest(TestCase):
         self.assertEqual(self.project_technology.technology.name, 'Test Technology')
         self.assertEqual(self.project_technology.display_order, 1)
 
+
+class ProjectLinkTestCase(TestCase):
+    def setUp(self):
+        project = Project.objects.create(name="Test Project", description="Description")
+
+        icon, _ = FontAwesomeIcon.objects.get_or_create(css_classes="fa fa-link", title="Link Icon")
+
+        self.project_link = ProjectLink.objects.create(
+            project=project,
+            title="Test Link",
+            link="https://example.com",
+            icon=icon,
+            text="Link Description"
+        )
+
+    def test_project_link_str(self):
+        expected_str = f"{self.project_link.project} - {self.project_link.title}"
+        self.assertEqual(str(self.project_link), expected_str)
+
+    def test_project_link_fields(self):
+        self.assertEqual(self.project_link.project.name, "Test Project")
+        self.assertEqual(self.project_link.title, "Test Link")
+        self.assertEqual(self.project_link.link, "https://example.com")
+        self.assertEqual(self.project_link.icon.css_classes, "fa fa-link")
+        self.assertEqual(self.project_link.text, "Link Description")

@@ -1,0 +1,19 @@
+<h2 class="mb-5">Education</h2>
+{% for education in educations %}
+<div class="card dynamic-card d-flex flex-column flex-md-row justify-content-between mb-5">
+    <div class="card-body flex-grow-1">
+        <div class="row no-gutters">
+            <div class="col-md-3 align-self-start">
+                <img src="{{ education.get_thumbnail_url }}" alt="{{ education.school_name }}" class="dynamic-card-thumbnail card-img img-fluid h-100">
+            </div>
+            <div class="col-md-9">
+                <h3 class="card-title mt-md-3">{{ education.school_name }}</h3>
+                <p class="subheading mb-3">{{ education.program }}</p>
+                <p>{{ education.role }}</p>
+                <p>{{ education.description }}</p>
+            </div>
+        </div>
+    </div>
+    <p class="flex-shrink-0 mt-1 mx-1"><span class="text-primary">{{ education.get_duration }}</span></p>
+</div>
+{% endfor %}

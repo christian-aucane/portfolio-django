@@ -5,7 +5,7 @@ from base.models import DurationBaseModel
 
 
 class Experience(DurationBaseModel):
-    class Meta:
+    class Meta(DurationBaseModel.Meta):
         verbose_name = _("Experience")
         verbose_name_plural = _("Experiences")
 

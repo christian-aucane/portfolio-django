@@ -45,6 +45,39 @@ class Project(DisplayOrderBaseModel):
     def __str__(self):
         return self.name
 
+    def get_thumbnail_url(self):
+        return self.thumbnail.url
+
+    def get_technologies_by_categories(self):
+        technologies_by_category = defaultdict(list)
+        categories = self.categories.objects.all().values_list('name', flat=True)
+        for category in categories:
+
+            technologies_by_category[category].append(category)
+        ordered_technologies = self.categor.order_by('category', 'display_order')
+
+        for technology in ordered_skills:
+            skills_by_category[skill.category].append(skill)
+
+        return skills_by_category
+
+
+class ProjectLink(DisplayOrderBaseModel):
+    class Meta:
+        verbose_name = _("Project Link")
+        verbose_name_plural = _("Project Links")
+
+    project = models.ForeignKey('Project', on_delete=models.CASCADE,
+                                related_name='links', verbose_name=_("Project"))
+    title = models.CharField(max_length=255, verbose_name=_("Title"))
+    link = models.URLField(verbose_name=_("Link"))
+    icon = models.ForeignKey(FontAwesomeIcon, on_delete=models.CASCADE,
+                             verbose_name=_("Icon"))
+    text = models.CharField(max_length=255, verbose_name=_("Text"), null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.project} - {self.title}"
+
 
 class ProjectTechnology(DisplayOrderBaseModel):
     class Meta:
@@ -66,6 +99,7 @@ class ProjectCategory(DisplayOrderBaseModel):
         verbose_name_plural = _("Project Categories")
 
     project = models.ForeignKey('Project', on_delete=models.CASCADE,
+                                related_name='categories_through',
                                 verbose_name=_("Project"))
     category = models.ForeignKey(Category, on_delete=models.CASCADE,
                                  verbose_name=_("Category"))

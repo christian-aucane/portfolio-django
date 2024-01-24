@@ -1,0 +1,57 @@
+{% load icon_tags %}
+<h2 class="mb-5">Projects</h2>
+{% for project in projects %}
+    <div class="dynamic-card card mb-4">
+        <div class="card-body d-flex">
+            <div class="row no-gutters">
+                <div class="col-md align-self-start">
+                    <img src="{{ project.get_thumbnail_url }}" alt="{{ project.name }}" class="dynamic-card-thumbnail card-img img-fluid h-100">
+                </div>
+                <div class="col-md">
+                    <h3 class="card-title mt-3 mt-md-0">{{ project.name }}</h3>
+                    <div class="card-text">
+                        <p>
+                            {{ project.description }}
+                        </p>
+                        <div class="mb-3 text-center">
+                            {% for category_through in project.categories_through.all %}
+                            <ul class="list-inline d-none d-lg-inline">
+                                <li class="list-inline-item">
+                                    <strong>{{ category_through.category.name }} :</strong>
+                                </li>
+                                {% for technology in category_through.technologies.all %}
+                                    <li class="list-inline-item">
+                                        {% icon technology.icon %} {{ technology.name }}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                            <br>
+                            {% endfor %}
+                            
+                            <ul class="list-unstyled d-lg-none">
+                                {% for category_through in project.categories_through.all %}
+                                    <li class="mt-2">
+                                        <strong>{{ category_through.category.name }} :</strong>
+                                    </li>
+                                    {% for technology in category_through.technologies.all %}
+                                        <li>
+                                            {% icon technology.icon %} {{ technology.name }}
+                                        </li>
+                                    {% endfor %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="mt-auto d-flex flex-column flex-md-row justify-content-center align-items-center">
+                            {% for project_link in project.links.all %}
+                            
+                                <a href="{{ project_link.link}}" class="btn btn-outline-primary text-center mb-2 mx-2" target="_blank">
+                                    {% icon project_link.icon %} {{ project_link.text }}
+                                </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}

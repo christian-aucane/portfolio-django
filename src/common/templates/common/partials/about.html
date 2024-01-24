@@ -1,0 +1,22 @@
+{% load icon_tags %}
+<h1 class="mb-0">
+    {{ about.first_name }}
+    <span class="text-primary">{{ about.last_name }}</span>
+</h1>
+<div class="subheading mb-5">
+    {% for skill in about.skills.all %}
+        {{ skill }}
+    {% if not forloop.last %} · {% endif %}
+{% endfor %}
+
+</div>
+<p class="lead mb-5">
+    {{ about.description }}
+</p>
+<div class="social-icons">
+    {% for social_link in about.social_links.all %}
+        <a class="social-icon" href="{{ social_link.url }}" target="_blank">
+            {% icon social_link.icon %}
+        </a>
+    {% endfor %}
+</div>

@@ -1,0 +1,6 @@
+<h2 class="mb-5">Interests</h2>
+{% for paragraph in interests %}
+<p title="{{ paragraph.title }}">
+    {{ paragraph.text }}
+</p>
+{% endfor %}

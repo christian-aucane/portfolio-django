@@ -1,0 +1,87 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {% include "common/partials/head.html" with meta=site_meta_data %}
+
+    </head>
+    <body id="page-top">
+        <!-- Navigation -->
+        {% include "common/partials/nav.html" with about=about_info %}
+
+        <!-- Page Content -->
+        <main class="container-fluid p-0" id="page-content">
+
+            <!-- About -->
+            <section class="resume-section" id="about">
+                <div class="resume-section-content">
+                    {% include "common/partials/about.html" with about=about_info %}
+                </div>
+            </section>
+            <hr class="m-0" />
+
+            <!-- Experience -->
+            <section class="resume-section" id="experience">
+                <div class="resume-section-content">
+                    {% include "common/partials/experience.html" with experiences=experiences %}
+                </div>
+            </section>
+            <hr class="m-0" />
+
+            <!-- Education -->
+            <section class="resume-section" id="education">
+                <div class="resume-section-content">
+                    {% include "common/partials/education.html" with educations=educations %}
+                </div>
+            </section>
+            <hr class="m-0" />
+
+            <!-- Skills -->
+            <section class="resume-section" id="skills">
+                <div class="resume-section-content">
+                    {% include "common/partials/skills.html" with skills=skills %}
+                </div>
+            </section>
+            <hr class="m-0" />
+
+            <!-- Projects -->
+            <section class="resume-section" id="projects">
+                <div class="resume-section-content">
+                    {% include "common/partials/projects.html" with projects=projects %}
+
+                </div>
+            </section>
+            <hr class="m-0" />
+
+            <!-- Interests -->
+            <section class="resume-section" id="interests">
+                <div class="resume-section-content">
+                    {% include "common/partials/interests.html" with interests=interests %}
+                </div>
+            </section>
+            <hr class="m-0" />
+
+            <!-- Awards -->
+            <section class="resume-section" id="awards">
+                <div class="resume-section-content">
+                    {% include "common/partials/awards.html" with awards_categories=awards_categories %}
+                </div>
+            </section>
+            <hr class="m-0" />
+
+            <!-- Contact -->
+            <section class="resume-section" id="contact">
+                <div class="resume-section-content">
+                    {% include "common/partials/contact_form.html" %}
+                </div>
+            </section>
+
+        </main>
+
+        {% include "common/partials/footer.html" with meta=site_meta_data %}
+
+        <!-- Scripts -->
+        {% include "common/partials/scripts.html" %}
+
+    </body>
+</html>

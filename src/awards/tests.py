@@ -1,30 +1,39 @@
 from django.conf import settings
 from django.test import TestCase
+
+from common.models import FontAwesomeIcon
 from .models import AwardCategory, Award
 
 
 class AwardCategoryModelTests(TestCase):
     def test_award_category_creation(self):
+        icon, _ = FontAwesomeIcon.objects.get_or_create(
+                title="code", css_classes="fa-code"
+            )
         award_category = AwardCategory.objects.create(
             title="Programming",
-            icon="fa-code",
+            icon=icon,
             icon_color="blue"
         )
 
         self.assertEqual(award_category.title, "Programming")
-        self.assertEqual(award_category.icon, "fa-code")
+        self.assertEqual(award_category.icon, icon)
         self.assertEqual(award_category.icon_color, "blue")
         self.assertEqual(str(award_category), "Programming")
 
     def test_award_category_display_order(self):
         award_category_1 = AwardCategory.objects.create(
             title="Programming",
-            icon="fa-code",
+            icon=FontAwesomeIcon.objects.get_or_create(
+                title="code", css_classes="fa-code"
+            )[0],
             icon_color="blue"
         )
         award_category_2 = AwardCategory.objects.create(
             title="Design",
-            icon="fa-paint-brush",
+            icon=FontAwesomeIcon.objects.get_or_create(
+                title="brush", css_classes="fa-paint-brush"
+            )[0],
             icon_color="red"
         )
 
@@ -36,7 +45,9 @@ class AwardModelTests(TestCase):
     def setUp(self):
         self.award_category = AwardCategory.objects.create(
             title="Programming",
-            icon="fa-code",
+            icon=FontAwesomeIcon.objects.get_or_create(
+                title="code", css_classes="fa-code"
+            )[0],
             icon_color="blue"
         )
 
