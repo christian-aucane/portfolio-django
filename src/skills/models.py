@@ -36,6 +36,9 @@ class Skill(DisplayOrderBaseModel):
     def get_skills_by_category(cls):
         skills_by_category = defaultdict(list)
 
+        for category in cls.CATEGORY_CHOICES:
+            skills_by_category[category[0]] = []
+
         ordered_skills = cls.objects.order_by('category', 'display_order')
 
         for skill in ordered_skills:
