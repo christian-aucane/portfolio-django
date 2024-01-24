@@ -5,8 +5,11 @@ from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
+from base.models import UniqueEntryBaseModel
+
 
 class ContactThread(models.Model):
+    # TODO : utiliser un modèle séparé pour gérer l'identité ?
     class Meta:
         verbose_name = _("Contact Thread")
         verbose_name_plural = _("Contact Threads")
@@ -24,6 +27,7 @@ class ContactThread(models.Model):
     processed_at = models.DateTimeField(null=True, blank=True, verbose_name=_("Processed at"))
     is_archived = models.BooleanField(default=False, verbose_name=_("Archived"))
     archived_at = models.DateTimeField(null=True, blank=True, verbose_name=_("Archived at"))
+    gdpr_consent = models.BooleanField(default=False, verbose_name=_("Consent given"))
 
     def __str__(self):
         return f"{self.name} - {self.subject}"
@@ -82,8 +86,12 @@ class ContactMessage(models.Model):
         return super().save(*args, **kwargs)
 
     @classmethod
-    def new_contact(cls, name, email, subject, message):
-        thread = ContactThread.objects.create(name=name, email=email, subject=subject)
+    def new_contact(cls, name, email, subject, message, gdpr_consent=False):
+        if not gdpr_consent:
+            return False
+        thread = ContactThread.objects.create(
+            name=name, email=email, subject=subject, gdpr_consent=gdpr_consent
+        )
         cls.objects.create(thread=thread, sender="user", message=message)
         return True
 
@@ -92,5 +100,13 @@ class ContactMessage(models.Model):
         try:
             thread = ContactThread.objects.get(uuid=thread_uuid, email=email)
             cls.objects.create(thread=thread, sender="user", message=message)
+            return True
         except (ValidationError, ContactThread.DoesNotExist):
             return False
+
+
+class AdminContact(UniqueEntryBaseModel):
+    admin_email = models.EmailField(default="default@example.com", verbose_name=_("Admin Email"))
+
+    def __str__(self):
+        return _("Admin Contact Information")
