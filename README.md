@@ -14,6 +14,11 @@ A Django project for a portfolio
 - Faire du code lint dans tous les fichiers (utiliser une librairie pour ca)
 - Ajouter les tests des models manquants
 
+### PROCHAINE ETAPE
+- faire les vue de contact
+  - soumission (envoi d'email de confirmation et d'un email a l'admin et enregistrement du model)
+  - traitement de la conversation (vue qui affiche le thread et permet d'envoyer un nouveau message dans le meme thread)
+
 ## Management commands
 Use `python manage.py <command>`
 
