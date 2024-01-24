@@ -8,6 +8,7 @@ from django.utils.translation import gettext
 from about.models import AboutInfo, AboutSkill, SocialLink
 from awards.models import AwardCategory, Award
 from common.models import FontAwesomeIcon
+from contact.models import ContactMessage, ContactThread
 from education.models import Education
 from experience.models import Experience
 from interests.models import Paragraph
@@ -261,6 +262,24 @@ def generate_awards():
     Award.objects.bulk_create(courses)
 
 
+def generate_contact_messages():
+    for _ in range(5):
+        ContactMessage.new_contact(
+            name=f"{fake.first_name()} {fake.last_name()}",
+            email=fake.email(),
+            subject=get_unique_fake_word(random.randint(3, 8)),
+            message=fake.text()
+        )
+    print("Contact messages generated")
+    for thread in ContactThread.objects.all():
+        for _ in range(random.randint(1, 5)):
+            ContactMessage.add_message_to_thread(
+                thread_uuid=thread.uuid,
+                email=fake.email,
+                message=fake.text()
+            )
+
+
 def generate_fake_data():
 
     generate_about_info()
@@ -272,6 +291,8 @@ def generate_fake_data():
     generate_projects()
     generate_interests()
     generate_awards()
+
+    generate_contact_messages()
 
     THUMBNAIL.close()
     FILE.close()
