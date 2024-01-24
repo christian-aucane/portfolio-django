@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django import forms
 from django.forms import inlineformset_factory
-from .models import Project, Category, Technology, ProjectCategory, ProjectTechnology
+from .models import Project, Category, Technology, ProjectCategory, ProjectTechnology, ProjectLink
 
 
 class ProjectTechnologyInline(admin.TabularInline):
@@ -25,12 +25,17 @@ class ProjectCategoryInline(admin.TabularInline):
     model = ProjectCategory
     form = ProjectCategoryForm
     inlines = [ProjectTechnologyInline]
-    extra = 1
+    extra = 0
+
+
+class ProjectLinkInline(admin.TabularInline):
+    model = ProjectLink
+    extra = 0
 
 
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
-    inlines = [ProjectCategoryInline]
+    inlines = [ProjectCategoryInline, ProjectLinkInline]
 
 
 @admin.register(Technology)
