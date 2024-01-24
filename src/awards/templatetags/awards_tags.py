@@ -1,5 +1,5 @@
 from django import template
-from django.utils.safestring import mark_safe
+from django.utils.translation import gettext as _
 
 from common.templatetags.icon_tags import icon_li
 
@@ -19,4 +19,11 @@ def render_award_li(award):
         """
     else:
         content = f"{award.title} - {award.text}"
+
+    obtain_date = award.get_obtain_date()
+    if obtain_date:
+        content = f"{content} ({obtain_date})"
+    else:
+        content = f"{_('In progress')} : {content}"
+
     return icon_li(font_awesome_icon, content, extra_classes)

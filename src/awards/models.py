@@ -36,3 +36,6 @@ class Award(DisplayOrderBaseModel):
 
     def get_file_url(self):
         return self.file.url
+
+    def get_obtain_date(self):
+        return self.obtain_date.strftime("%m/%Y") if self.obtain_date else ""
