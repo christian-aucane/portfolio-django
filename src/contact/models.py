@@ -1,4 +1,6 @@
 import uuid as uuid
+
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
@@ -74,14 +76,14 @@ class ContactMessage(models.Model):
     def save(self, *args, **kwargs):
         if self.pk:
             original_instance = ContactMessage.objects.get(pk=self.pk)
-            if original_instance.has_changed():
+            if any(getattr(original_instance, field.name) != getattr(self, field.name)
+                   for field in self._meta.fields):
                 return self
         return super().save(*args, **kwargs)
 
     @classmethod
     def new_contact(cls, name, email, subject, message):
-        thread = ContactThread(name=name, email=email, subject=subject)
-        thread.save()
+        thread = ContactThread.objects.create(name=name, email=email, subject=subject)
         cls.objects.create(thread=thread, sender="user", message=message)
         return True
 
@@ -90,5 +92,5 @@ class ContactMessage(models.Model):
         try:
             thread = ContactThread.objects.get(uuid=thread_uuid, email=email)
             cls.objects.create(thread=thread, sender="user", message=message)
-        except ContactThread.DoesNotExist:
+        except (ValidationError, ContactThread.DoesNotExist):
             return False
