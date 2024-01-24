@@ -1,0 +1,26 @@
+{% load icon_tags %}
+<h2 class="mb-5">Skills</h2>
+<div class="subheading mb-2">Programming Languages & Tools</div>
+<ul class="list-inline dev-icons mb-3">
+    {% for skill in skills.language %}
+        <li class="list-inline-item">{% icon skill.icon %}</li>
+    {% endfor %}
+</ul>
+<div class="d-md-flex">
+    <div style="margin-right: 1rem;" class="mb-3">
+        <div class="subheading mb-2">Frameworks & Libraries</div>
+        <ul class="fa-ul">
+            {% for skill in skills.framework %}
+                {% icon_li skill.icon skill.name %}
+            {% endfor %}
+        </ul>
+    </div>
+    <div>
+        <div class="subheading mb-2">Workflow</div>
+        <ul class="fa-ul">
+            {% for skill in skills.workflow %}
+                {% icon_li skill.icon skill.name %}
+            {% endfor %}
+        </ul>
+    </div>
+</div>

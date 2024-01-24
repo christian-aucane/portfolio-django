@@ -1,0 +1,16 @@
+<!-- TODO : rendre dynamiques -->
+<footer class="bg-dark text-light py-4" id="footer">
+    <div class="container-fluid text-center">
+
+        <div class="credits">
+            {% for credit in meta.credits.all %}
+                {{ credit.html|safe }}
+            {% endfor %}
+        </div>
+
+        <div id="copyright">
+            <p class="mb-0">&copy; 2024 {{ meta.author }}. Tous droits réservés.</p>
+        </div>
+
+    </div>
+</footer>

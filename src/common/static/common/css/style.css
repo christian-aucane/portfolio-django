@@ -1,0 +1,31 @@
+@media (min-width: 768px) {
+    .dynamic-card {
+        transition: box-shadow 0.3s ease-in-out;
+    }
+    .dynamic-card-thumbnail {
+        transition: filter 0.3s ease-in-out;
+        filter: blur(1px);
+    }
+    .dynamic-card:hover {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    }
+    .dynamic-card:hover .dynamic-card-thumbnail {
+        filter: blur(0);
+    }
+    .img-profile:hover {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    }
+}
+
+@media (min-width: 1400px) {
+    main::after {
+        content: "";
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 75%; /* Ajustez cette valeur pour contrôler la largeur du dégradé */
+        z-index: -1;
+        background: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.3));
+    }
+}
