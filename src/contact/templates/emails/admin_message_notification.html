@@ -1,0 +1,12 @@
+<h1>New message from {{ message.thread.name }}.</h1>
+<p>
+    Click on the
+    <a href="{{ message.thread.get_dashboard_url }}">
+        link
+    </a>
+    to open in dashboard.
+</p>
+<p><strong>Email:</strong> {{ message.thread.email }}</p>
+<p><strong>Subject:</strong> {{ message.thread.subject }}</p>
+<p><strong>Message:</strong></p>
+<p>{{ message.message }}</p>
