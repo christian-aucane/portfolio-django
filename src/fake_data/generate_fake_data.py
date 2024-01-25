@@ -268,9 +268,9 @@ def generate_contact_messages():
             name=f"{fake.first_name()} {fake.last_name()}",
             email=fake.email(),
             subject=get_unique_fake_word(random.randint(3, 8)),
-            message=fake.text()
+            message=fake.text(),
+            gdpr_consent=True
         )
-    print("Contact messages generated")
     for thread in ContactThread.objects.all():
         for _ in range(random.randint(1, 5)):
             ContactMessage.add_message_to_thread(
