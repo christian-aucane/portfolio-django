@@ -2,7 +2,6 @@ import uuid
 
 from django.core.exceptions import ValidationError
 from django.test import TestCase
-from django.utils import timezone
 from .models import ContactThread, ContactMessage, AdminContact
 
 
@@ -19,10 +18,8 @@ class ContactThreadModelTests(TestCase):
         self.assertFalse(thread.is_archived)
         self.assertIsNone(thread.archived_at)
 
-        # Save the thread without processing
         thread.save()
 
-        # Check that processed_at and archived_at remain unchanged
         self.assertIsNone(thread.processed_at)
         self.assertIsNone(thread.archived_at)
 
@@ -47,7 +44,6 @@ class ContactThreadModelTests(TestCase):
             subject="Test Subject"
         )
 
-        # Attempt to archive an unprocessed thread should raise ValueError
         with self.assertRaises(ValueError):
             thread.is_archived = True
             thread.save()
@@ -60,7 +56,6 @@ class ContactThreadModelTests(TestCase):
             is_processed=True
         )
 
-        # Archive a processed thread
         thread.is_archived = True
         thread.save()
 
@@ -83,11 +78,9 @@ class ContactMessageModelTests(TestCase):
             message="Test Message"
         )
 
-        # Saving an unchanged message should not create a new instance
         self.assertIsNone(message.save())
 
     def test_new_contact_message_with_gdpr_consent(self):
-        # Create a new contact message
         message = ContactMessage.new_contact(
             name="Jane Doe",
             email="jane.doe@example.com",
@@ -114,7 +107,6 @@ class ContactMessageModelTests(TestCase):
         self.assertEqual(message.message, "New Contact Message")
 
     def test_new_contact_message_without_gdpr_consent_fail(self):
-        # Create a new contact message
         message = ContactMessage.new_contact(
             name="Jane Doe",
             email="jane.doe@example.com",
@@ -126,14 +118,12 @@ class ContactMessageModelTests(TestCase):
         self.assertEqual(ContactThread.objects.count(), 1)
 
     def test_add_message_to_thread(self):
-        # Add a message to an existing thread
         ContactMessage.add_message_to_thread(
             thread_uuid=self.thread.uuid,
             email="john.doe@example.com",
             message="Reply Message"
         )
 
-        # Check that the message was added to the existing thread
         self.assertEqual(ContactMessage.objects.count(), 1)
         self.assertEqual(ContactThread.objects.count(), 1)
 
@@ -145,7 +135,6 @@ class ContactMessageModelTests(TestCase):
         self.assertEqual(message.message, "Reply Message")
 
     def test_add_message_to_nonexistent_thread(self):
-        # Attempting to add a message to a nonexistent thread should return False
         result = ContactMessage.add_message_to_thread(
             thread_uuid=uuid.uuid4(),
             email="nonexistent@example.com",
@@ -157,7 +146,6 @@ class ContactMessageModelTests(TestCase):
         self.assertEqual(ContactThread.objects.count(), 1)
 
     def test_add_message_to_invalid_uuid(self):
-        # Attempting to add a message with an invalid UUID should return False
         result = ContactMessage.add_message_to_thread(
             thread_uuid="invalid_uuid",
             email="invalid@example.com",
