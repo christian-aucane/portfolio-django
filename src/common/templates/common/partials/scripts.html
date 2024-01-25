@@ -9,6 +9,6 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         // TODO : mettre l'URL de la vue de contact a la place
-        const contactForm = new ContactForm('https://formspree.io/f/myyrkgvd');
+        const contactForm = new ContactForm('{% url "contact_form_submission"%}');
     });
 </script>
