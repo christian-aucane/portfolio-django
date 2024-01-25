@@ -99,6 +99,7 @@ class ContactForm {
                 'Accept': 'application/json'
             }
         })
+        .then(response => new Promise(resolve => setTimeout(() => resolve(response), 1000)))
         .then(response => {
             if (response.ok) {
                 // La requête a réussi, masque le bouton et affiche le message de succès
