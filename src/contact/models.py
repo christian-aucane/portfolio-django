@@ -1,9 +1,9 @@
 import uuid as uuid
 
 from django.core.exceptions import ValidationError
-from django.db import models
+from django.db import models, transaction
 from django.utils import timezone
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext as _
 
 from base.models import UniqueEntryBaseModel
 
@@ -86,28 +86,27 @@ class ContactMessage(models.Model):
         return super().save(*args, **kwargs)
 
     @classmethod
+    @transaction.atomic
     def new_contact(cls, name, email, subject, message, gdpr_consent=False):
         if not gdpr_consent:
-            return False
+            return
         thread = ContactThread.objects.create(
             name=name, email=email, subject=subject, gdpr_consent=gdpr_consent
         )
-        cls.objects.create(thread=thread, sender="user", message=message)
-        return True
+        return cls.objects.create(thread=thread, sender="user", message=message)
 
     @classmethod
     def add_message_to_thread(cls, thread_uuid, email, message):
         try:
             thread = ContactThread.objects.get(uuid=thread_uuid, email=email)
-            cls.objects.create(thread=thread, sender="user", message=message)
-            return True
+            return cls.objects.create(thread=thread, sender="user", message=message)
         except (ValidationError, ContactThread.DoesNotExist):
-            return False
+            return
 
 
 class AdminContact(UniqueEntryBaseModel):
-    admin_email = models.EmailField(default="default@example.com", verbose_name=_("Admin Email"))
-    website_email = models.EmailField(default="default@example.com", verbose_name=_("Website Email"))
+    admin_email = models.EmailField(default="admin@example.com", verbose_name=_("Admin Email"))
+    website_email = models.EmailField(default="website@example.com", verbose_name=_("Website Email"))
 
     def __str__(self):
         return _("Admin Contact Information")

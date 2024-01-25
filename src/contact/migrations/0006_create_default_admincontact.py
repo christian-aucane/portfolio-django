@@ -10,7 +10,7 @@ def create_default_admin_contact(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('contact', '0003_admincontact'),
+        ('contact', '0005_alter_admincontact_admin_email_and_more'),
     ]
 
     operations = [
