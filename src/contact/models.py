@@ -53,6 +53,11 @@ class ContactThread(models.Model):
 
         return super().save(*args, **kwargs)
 
+    def get_dashborad_url(self):
+        return "" # TODO : remplacer par l'url réelle
+
+    def get_website_url(self):
+        return "" # TODO : remplacer par l'url réelle
 
 class ContactMessage(models.Model):
     class Meta:

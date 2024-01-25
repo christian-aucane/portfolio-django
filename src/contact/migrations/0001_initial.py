@@ -40,7 +40,8 @@ class Migration(migrations.Migration):
                 ('sender', models.CharField(choices=[('admin', 'Admin'), ('user', 'User')], max_length=255, verbose_name='Sender')),
                 ('message', models.TextField(verbose_name='Message')),
                 ('created_at', models.DateTimeField(auto_now_add=True, verbose_name='Created at')),
-                ('thread', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='messages', to='contact.contactthread', verbose_name='Thread')),
+                ('thread', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='messages',
+                                             to='contact.contactthread', verbose_name='Thread')),
             ],
             options={
                 'verbose_name': 'Contact Message',
