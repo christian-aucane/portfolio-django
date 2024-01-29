@@ -15,7 +15,7 @@ class DisplayOrderBaseModel(models.Model):
         model_class = self.__class__
         if model_class.objects.exists() and not self.pk:
             self.display_order = model_class.objects.last().display_order + 1
-        super().save(*args, **kwargs)
+        return super().save(*args, **kwargs)
 
 
 class DurationBaseModel(models.Model):
@@ -41,7 +41,7 @@ class UniqueEntryBaseModel(models.Model):
         model_class = self.__class__
         if model_class.objects.exists() and not self.pk:
             raise ValidationError(_(f"There can only be one entry in the {model_class.__name__} table."))
-        super().save(*args, **kwargs)
+        return super().save(*args, **kwargs)
 
     def delete(self, *args, **kwargs):
         raise ValidationError(_(f"Deleting the {self.__class__.__name__} object is prohibited."))
