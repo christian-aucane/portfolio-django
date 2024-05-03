@@ -1,6 +1,9 @@
 # portfolio-django
 A Django project for a portfolio
 
+## Liens utiles
+- [Boite de dialogue](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog)
+
 ## TODO
 - Mettre les ForeignKey de FontAwesomeIcon en PROTECT
 - Ajouter des related_name a toutes les relations
@@ -12,7 +15,8 @@ A Django project for a portfolio
 - Ajuster le centrage des images dans les card
 - Ajouter analytique sur les liens (compteur et redirection)
 - Faire du code lint dans tous les fichiers (utiliser une librairie pour ca)
-- Ajouter les tests des models manquants
+- Ajouter traduction dans les templates d'email et dans le template index (formulaire)
+- Créer vues qui affiche les threads (dashboard et user) et permet de répondre directement dans la vue
 
 ## PROCHAINE ETAPE
 - Faire un pull sur le main

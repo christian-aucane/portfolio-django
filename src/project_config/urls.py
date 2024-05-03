@@ -19,11 +19,12 @@ from django.urls import path, include
 from django.conf import settings
 
 from common.views import IndexView
-
+from contact.views import ContactFormSubmissionView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', IndexView.as_view(), name='index'),
+    path('emails/submit/', ContactFormSubmissionView.as_view(), name='contact_form_submission'),
 ]
 
 if settings.MODE == 'DEV':

@@ -19,12 +19,13 @@ class ContactForm {
     checkFormValidity() {
         const name = document.getElementById('name').value.trim();
         const email = document.getElementById('emailAddress').value.trim();
+        const subject = document.getElementById('subject').value.trim();
         const message = document.getElementById('message').value.trim();
         const consent = document.getElementById('consentCheckbox').checked;
         const submitButton = document.getElementById('submitButton');
     
         // Activates the submit button if all fields are valid, otherwise deactivates it.
-        if (name !== '' && this.isValidEmail(email) && message !== '' && consent) {
+        if (name !== '' && this.isValidEmail(email) && subject !== '' && message !== '' && consent) {
             submitButton.removeAttribute('disabled');
         } else {
             submitButton.setAttribute('disabled', 'disabled');
@@ -36,7 +37,7 @@ class ContactForm {
         const field = document.getElementById(fieldId);
         const fieldValue = field.value.trim();
         const errorContainer = document.getElementById(`${fieldId}Error`);
-    
+        
         // Checks if the field is empty
         if (fieldValue === '') {
             errorContainer.textContent = 'Ce champ est requis.';
@@ -98,6 +99,7 @@ class ContactForm {
                 'Accept': 'application/json'
             }
         })
+        .then(response => new Promise(resolve => setTimeout(() => resolve(response), 1000)))
         .then(response => {
             if (response.ok) {
                 // La requête a réussi, masque le bouton et affiche le message de succès
@@ -125,24 +127,28 @@ class ContactForm {
     // Function to set up event listeners
     setUpEventListeners() {
         // Add event listener for form submission
-        document.getElementById('contactForm').addEventListener('submit', function (event) {
+        document.getElementById('contactForm').addEventListener('submit', (event) => {
             event.preventDefault();
             this.submitForm();
         });
     
         // Add event listeners for each field
-        document.getElementById('name').addEventListener('blur', function () {
+        document.getElementById('name').addEventListener('blur', () => {
             this.validateField('name');
         });
-        document.getElementById('emailAddress').addEventListener('blur', function () {
+        document.getElementById('emailAddress').addEventListener('blur', () => {
             this.validateField('emailAddress');
         });
-        document.getElementById('message').addEventListener('blur', function () {
+        document.getElementById('subject').addEventListener('blur', () => {
+            this.validateField('subject');
+        });
+        document.getElementById('message').addEventListener('blur', () => {
             this.validateField('message');
         });
     
         // Add event listener for the consent checkbox
-        document.getElementById('consentCheckbox').addEventListener('change', this.validateConsentCheckbox);
+        document.getElementById('consentCheckbox').addEventListener('change', () => {
+            this.validateConsentCheckbox();
+        });
     };
-    
 }
