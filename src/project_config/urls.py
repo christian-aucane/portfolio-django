@@ -25,6 +25,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', IndexView.as_view(), name='index'),
     path('emails/submit/', ContactFormSubmissionView.as_view(), name='contact_form_submission'),
+    path('accounts/', include('accounts.urls')),
 ]
 
 if settings.MODE == 'DEV':

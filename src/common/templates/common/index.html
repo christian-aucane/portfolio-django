@@ -3,9 +3,11 @@
 <html lang="en">
     <head>
         {% include "common/partials/head.html" with meta=site_meta_data %}
-
     </head>
     <body id="page-top">
+        <!-- Authentication -->
+        {% include "common/partials/auth.html" %}
+
         <!-- Navigation -->
         {% include "common/partials/nav.html" with about=about_info %}
 
