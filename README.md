@@ -8,11 +8,18 @@ A Django project for a portfolio
 - Créer un dashboard pour remplir le site
 - Ajouter des templatetags pour le rendu des elements
 - Rassembler les apps des sections dans un dossier / tout rassembler dans une app ?
-- Ajouter héritage de la classe MEta dans les models héritant de DisplayOrderBaseModel
+- Ajouter héritage de la classe Meta dans les models héritant de DisplayOrderBaseModel
 - Ajuster le centrage des images dans les card
 - Ajouter analytique sur les liens (compteur et redirection)
 - Faire du code lint dans tous les fichiers (utiliser une librairie pour ca)
 - Ajouter les tests des models manquants
+
+## PROCHAINE ETAPE
+- Faire un pull sur le main
+- Faire le dashboard
+  - remplir toutes les sections a partir du dashboard
+  - ajouter contacts
+  - ajouter analytics
 
 ## Management commands
 Use `python manage.py <command>`
