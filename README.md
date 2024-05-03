@@ -17,9 +17,10 @@ A Django project for a portfolio
 - Faire du code lint dans tous les fichiers (utiliser une librairie pour ca)
 - Ajouter traduction dans les templates d'email et dans le template index (formulaire)
 - Créer vues qui affiche les threads (dashboard et user) et permet de répondre directement dans la vue
+- Styliser formulaire de login
+
 
 ## PROCHAINE ETAPE
-- Faire un pull sur le main
 - Faire le dashboard
   - remplir toutes les sections a partir du dashboard
   - ajouter contacts
